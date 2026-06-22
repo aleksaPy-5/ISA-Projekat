@@ -1,6 +1,9 @@
 package rs.singidunum.projekat.model;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
@@ -17,6 +20,7 @@ public class Kategorija {
 	private String naziv;
 	
 	@OneToMany(mappedBy = "kategorija")
+	@JsonIgnore
 	private List<Proizvod> proizvodi = new ArrayList<Proizvod>();
 
 	public Kategorija() {
