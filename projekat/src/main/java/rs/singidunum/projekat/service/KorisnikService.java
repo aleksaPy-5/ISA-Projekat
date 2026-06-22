@@ -16,7 +16,7 @@ public class KorisnikService {
 	
 	private final KorisnikRepository korisnikRepository;
 	
-	public KorisnikService(KorisnikRepository korisnikRepository, KategorijaRepository kategorijaRepository) {
+	public KorisnikService(KorisnikRepository korisnikRepository) {
 		this.korisnikRepository = korisnikRepository;
 		
 	}
@@ -40,6 +40,11 @@ public class KorisnikService {
 	public Korisnik update(Long id, Korisnik izmeniKorisnika) {
 		Korisnik postojeciKorisnik = findById(id);
 		postojeciKorisnik.setIme(izmeniKorisnika.getIme());
+		postojeciKorisnik.setPrezime(izmeniKorisnika.getPrezime());
+	    postojeciKorisnik.setEmail(izmeniKorisnika.getEmail());
+	    postojeciKorisnik.setLozinka(izmeniKorisnika.getLozinka());
+	    postojeciKorisnik.setTelefon(izmeniKorisnika.getTelefon());
+	    postojeciKorisnik.setAdresa(izmeniKorisnika.getAdresa());
 		return korisnikRepository.save(postojeciKorisnik);
 	}
 	

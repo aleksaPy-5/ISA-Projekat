@@ -30,4 +30,19 @@ public class PorudzbinaService {
 	public Porudzbina save(Porudzbina porudzbina) {
 		return porudzbinaRepository.save(porudzbina);
 	}
+	
+	public Porudzbina update(Long id, Porudzbina izmeniPorudzbinu) {
+		Porudzbina postojecaPorudzbina = findById(id);
+		
+		postojecaPorudzbina.setStatus(izmeniPorudzbinu.getStatus());
+	    postojecaPorudzbina.setUkupnaCena(izmeniPorudzbinu.getUkupnaCena());
+
+	    return porudzbinaRepository.save(postojecaPorudzbina);
+	}
+	
+	public void delete(Long id) {
+		Porudzbina porudzbina = findById(id);
+		porudzbinaRepository.delete(porudzbina);
+		
+	}
 }
