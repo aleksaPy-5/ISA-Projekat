@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.singidunum.projekat.model.Kategorija;
@@ -49,4 +50,10 @@ public class KategorijaController {
     public void delete(@PathVariable Long id) {
         kategorijaService.delete(id);
     }
+    
+    @GetMapping("/pretraga-kategorija")
+    public List<Kategorija> pretragaKategorija(@RequestParam String naziv) {
+    	return kategorijaService.pretraga(naziv);
+    }
+    
 }

@@ -24,6 +24,10 @@ public class KategorijaService {
 		return kategorijaRepository.findById(id).orElseThrow(()-> new RuntimeException("Nepostojeca kategorija"));
 	}
 	
+	public List<Kategorija> pretraga(String naziv) {
+		return kategorijaRepository.findByNazivContainingIgnoreCase(naziv);
+	}
+	
 	// validacija kategorije
 	private void validiraj(Kategorija kategorija) {
 
