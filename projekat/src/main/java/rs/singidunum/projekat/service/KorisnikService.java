@@ -2,11 +2,11 @@ package rs.singidunum.projekat.service;
 
 import java.util.List;
 
-import org.hibernate.query.NativeQuery.ReturnableResultNode;
+
 import org.springframework.stereotype.Service;
 
 import rs.singidunum.projekat.model.Korisnik;
-import rs.singidunum.projekat.repository.KategorijaRepository;
+
 import rs.singidunum.projekat.repository.KorisnikRepository;
 
 @Service
@@ -26,6 +26,22 @@ public class KorisnikService {
 		return korisnikRepository.findAll();
 	}
 	
+	// validacija korisnika
+	private void validiraj(Korisnik korisnik) {
+		if(korisnik.getIme() == null || korisnik.getIme().trim().isEmpty()) {
+			throw new RuntimeException("Ime je obavezno");
+		}
+		
+		if(korisnik.getEmail() == null || korisnik.getEmail().trim().isEmpty()) {
+			throw new RuntimeException("Email je obavezan");
+		}
+		
+		if(korisnik.getLozinka() == null || korisnik.getLozinka().length() < 6) {
+			throw new RuntimeException ("Lozinka mora imati najmanje 6 karaktera");
+		}
+	}
+	
+	
 	// get by id
 	public Korisnik findById(Long id) {
 		return korisnikRepository.findById(id).orElseThrow(() -> new RuntimeException("Korisnik ne postoji"));
@@ -33,11 +49,25 @@ public class KorisnikService {
 	
 	// sacuvaj korisnika
 	public Korisnik save(Korisnik korisnik) {
+		
+		validiraj(korisnik);
+		if(korisnikRepository.existsByEmail(korisnik.getEmail())) {
+			throw new RuntimeException("Email vec postoji");
+		}
 		return korisnikRepository.save(korisnik);
+	}
+	
+	public Korisnik login(String email, String lozinka) {
+		Korisnik korisnik = korisnikRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Korisnik ne postoji"));
+		if(!korisnik.getLozinka().equals(lozinka)) {
+			throw new RuntimeException("Pogresna lozinka");
+		}
+		return korisnik;
 	}
 	
 	//update korisnika
 	public Korisnik update(Long id, Korisnik izmeniKorisnika) {
+		validiraj(izmeniKorisnika);
 		Korisnik postojeciKorisnik = findById(id);
 		postojeciKorisnik.setIme(izmeniKorisnika.getIme());
 		postojeciKorisnik.setPrezime(izmeniKorisnika.getPrezime());

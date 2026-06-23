@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.singidunum.projekat.model.Proizvod;
@@ -49,4 +50,16 @@ public class ProizvodController {
 	public void delete(@PathVariable Long id) {
 		proizvodService.delete(id);
 	}
+	
+	// kupovina
+	@PostMapping("/kupi/{id}")
+	public Proizvod kupi(@PathVariable Long id, @RequestParam int kolicina) {
+		return proizvodService.kupiProizvod(id, kolicina);
+	}
+	
+	@PutMapping("/dopuni/{id}")
+	public Proizvod dopuni(@PathVariable Long id, @RequestParam int kolicina) {
+		return proizvodService.dopuniLager(id, kolicina);
+	}
+	
 }

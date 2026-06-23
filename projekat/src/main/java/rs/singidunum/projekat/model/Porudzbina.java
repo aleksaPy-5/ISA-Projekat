@@ -1,15 +1,19 @@
 package rs.singidunum.projekat.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Porudzbina {
@@ -23,6 +27,10 @@ public class Porudzbina {
 	@ManyToOne
 	@JoinColumn(name = "korisnik_id")
 	private Korisnik korisnik;
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "porudzbina", cascade = CascadeType.ALL)
+	private List<StavkaPorudzbine> stavke;
 
 	public Porudzbina() {
 		super();
@@ -67,6 +75,14 @@ public class Porudzbina {
 
 	public void setKorisnik(Korisnik korisnik) {
 		this.korisnik = korisnik;
+	}
+	
+	public List<StavkaPorudzbine> getStavke() {
+	    return stavke;
+	}
+
+	public void setStavke(List<StavkaPorudzbine> stavke) {
+	    this.stavke = stavke;
 	}
 	
 	

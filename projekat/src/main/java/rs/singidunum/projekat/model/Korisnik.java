@@ -3,8 +3,7 @@ package rs.singidunum.projekat.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,13 +35,13 @@ public class Korisnik {
 	@Column(length = 250)
 	private String adresa;
 	
-	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name ="vrsta_korisnika_id")
 	private VrstaKorisnika vrstaKorisnika;
 	
-	@JsonManagedReference
+	
 	@OneToMany(mappedBy = "korisnik")
+	@JsonIgnore
 	private List<Porudzbina> porudzbine = new ArrayList<Porudzbina>();
 
 	public Korisnik() {

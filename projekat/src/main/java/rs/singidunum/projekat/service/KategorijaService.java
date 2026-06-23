@@ -24,12 +24,23 @@ public class KategorijaService {
 		return kategorijaRepository.findById(id).orElseThrow(()-> new RuntimeException("Nepostojeca kategorija"));
 	}
 	
+	// validacija kategorije
+	private void validiraj(Kategorija kategorija) {
+
+	    if(kategorija.getNaziv() == null ||
+	       kategorija.getNaziv().trim().isEmpty()) {
+	        throw new RuntimeException("Naziv kategorije je obavezan");
+	    }
+	}
+	
 	public Kategorija save(Kategorija kategorija) {
+		validiraj(kategorija);
 		return kategorijaRepository.save(kategorija);
 	}
 	
 	public Kategorija update(Long id, Kategorija izmeniKategoriju) {
 		Kategorija postojecaKategorija = findById(id);
+		validiraj(izmeniKategoriju);
 		postojecaKategorija.setNaziv(izmeniKategoriju.getNaziv());
 		return kategorijaRepository.save(postojecaKategorija);
 	}

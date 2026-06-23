@@ -2,7 +2,8 @@ package rs.singidunum.projekat.model;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,10 +16,10 @@ public class StavkaPorudzbine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length = 50)
 	private int kolicina;
 	private BigDecimal cena;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="porudzbina_id")
 	private Porudzbina porudzbina;
@@ -80,7 +81,8 @@ public class StavkaPorudzbine {
 	public void setProizvod(Proizvod proizvod) {
 		this.proizvod = proizvod;
 	}
-	
+
+
 	
 	
 }
