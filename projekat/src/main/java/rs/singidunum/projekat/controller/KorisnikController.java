@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.singidunum.projekat.model.Korisnik;
@@ -49,4 +50,13 @@ public class KorisnikController {
 		korisnikService.delete(id);
 	}
 	
+	@GetMapping("/pretraga-ime")
+	public List<Korisnik> pretragaIme (@RequestParam String ime) {
+		return korisnikService.pretraga(ime);
+	}
+	
+	@PostMapping("/login")
+	public Korisnik login(@RequestParam String email, @RequestParam String lozinka) {
+		return korisnikService.login(email, lozinka);
+	}
 }

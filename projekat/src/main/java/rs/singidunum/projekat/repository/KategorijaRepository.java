@@ -10,4 +10,5 @@ import rs.singidunum.projekat.model.Kategorija;
 @Repository
 public interface KategorijaRepository extends JpaRepository<Kategorija, Long>{
 	List<Kategorija> findByNazivContainingIgnoreCase(String naziv);
+	boolean existsByNazivIgnoreCase(String naziv);
 }

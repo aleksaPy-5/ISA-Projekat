@@ -56,4 +56,9 @@ public class KategorijaController {
     	return kategorijaService.pretraga(naziv);
     }
     
+    @GetMapping("/sortirano-naziv")
+    public List<Kategorija>sortirajPoNazivu() {
+    	return kategorijaService.sortirajPoNazivu();
+    }
+    
 }

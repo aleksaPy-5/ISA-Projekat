@@ -28,6 +28,13 @@ public class KategorijaService {
 		return kategorijaRepository.findByNazivContainingIgnoreCase(naziv);
 	}
 	
+	public List<Kategorija> sortirajPoNazivu() {
+		return kategorijaRepository.findAll()
+				.stream()
+				.sorted((k1, k2) -> k1.getNaziv().compareTo(k2.getNaziv()))
+				.toList();
+	}
+	
 	// validacija kategorije
 	private void validiraj(Kategorija kategorija) {
 
@@ -39,6 +46,9 @@ public class KategorijaService {
 	
 	public Kategorija save(Kategorija kategorija) {
 		validiraj(kategorija);
+		if(kategorijaRepository.existsByNazivIgnoreCase(kategorija.getNaziv())) {
+			throw new RuntimeException("Kategorija vec postoji!");
+		}
 		return kategorijaRepository.save(kategorija);
 	}
 	

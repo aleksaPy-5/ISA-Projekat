@@ -1,5 +1,6 @@
 package rs.singidunum.projekat.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,5 @@ import rs.singidunum.projekat.model.Korisnik;
 public interface KorisnikRepository extends JpaRepository<Korisnik, Long>{
 	Optional<Korisnik> findByEmail(String email);
 	boolean existsByEmail(String email);
+	List<Korisnik> findByImeContainingIgnoreCase(String ime);
 }

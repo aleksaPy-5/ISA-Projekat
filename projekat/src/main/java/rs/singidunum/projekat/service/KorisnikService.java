@@ -47,6 +47,11 @@ public class KorisnikService {
 		return korisnikRepository.findById(id).orElseThrow(() -> new RuntimeException("Korisnik ne postoji"));
 	}
 	
+	// pretraga korisnika po imenu
+	public List<Korisnik> pretraga(String ime) {
+		return korisnikRepository.findByImeContainingIgnoreCase(ime);
+	}
+	
 	// sacuvaj korisnika
 	public Korisnik save(Korisnik korisnik) {
 		
