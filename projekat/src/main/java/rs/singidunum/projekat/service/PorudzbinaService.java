@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import rs.singidunum.projekat.model.Porudzbina;
 import rs.singidunum.projekat.repository.PorudzbinaRepository;
 import rs.singidunum.projekat.repository.ProizvodRepository;
@@ -44,9 +45,10 @@ public class PorudzbinaService {
 	}
 	
 	public Porudzbina save(Porudzbina porudzbina) {
-		return porudzbinaRepository.save(porudzbina);
+		 return napraviPorudzbinu(porudzbina);
 	}
 	
+	@Transactional
 	public Porudzbina napraviPorudzbinu(Porudzbina porudzbina) {
 		validiraj(porudzbina);
 		
@@ -74,14 +76,53 @@ public class PorudzbinaService {
 		return porudzbinaRepository.save(porudzbina);
 	}
 	
+	private void proveriStatus(String status){
+
+	    if(status == null || status.isBlank()) {
+	        throw new RuntimeException("Status je obavezan");
+	    }
+
+	    if(!status.equals("Na cekanju") &&
+	       !status.equals("Poslata") &&
+	       !status.equals("Zavrsena") &&
+	       !status.equals("Otkazana")){
+
+	        throw new RuntimeException("Nepostojeci status");
+	    }
+	}
+	
+	@Transactional
+	public Porudzbina otkaziPorudzbinu(Long id) {
+
+	    Porudzbina porudzbina = findById(id);
+
+	    if(porudzbina.getStatus().equals("Otkazana")) {
+	        throw new RuntimeException("Porudzbina je vec otkazana");
+	    }
+
+	    for(var stavka : porudzbina.getStavke()) {
+
+	        var proizvod = stavka.getProizvod();
+
+	        proizvod.setKolicinaNaLageru(
+	            proizvod.getKolicinaNaLageru() + stavka.getKolicina()
+	        );
+
+	        proizvodRepository.save(proizvod);
+	    }
+
+	    porudzbina.setStatus("Otkazana");
+
+	    return porudzbinaRepository.save(porudzbina);
+	}
+	
 	public Porudzbina update(Long id, Porudzbina izmeniPorudzbinu) {
-		Porudzbina postojecaPorudzbina = findById(id);
-		if(izmeniPorudzbinu.getStatus() == null) {
-			throw new RuntimeException("Status je obavezan");
-		}
-		
-		postojecaPorudzbina.setStatus(izmeniPorudzbinu.getStatus());
-	    postojecaPorudzbina.setUkupnaCena(izmeniPorudzbinu.getUkupnaCena());
+
+	    Porudzbina postojecaPorudzbina = findById(id);
+
+	    proveriStatus(izmeniPorudzbinu.getStatus());
+
+	    postojecaPorudzbina.setStatus(izmeniPorudzbinu.getStatus());
 
 	    return porudzbinaRepository.save(postojecaPorudzbina);
 	}

@@ -1,5 +1,6 @@
 package rs.singidunum.projekat.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +33,7 @@ public class ProizvodController {
 	}
 	
 	@GetMapping("/{id}")
-	public Proizvod findByIdProizvod (@PathVariable Long id) {
+	public Proizvod findById (@PathVariable Long id) {
 		return proizvodService.findById(id);
 	}
 	
@@ -57,9 +58,21 @@ public class ProizvodController {
 		return proizvodService.kupiProizvod(id, kolicina);
 	}
 	
+	//dopuna
 	@PutMapping("/dopuni/{id}")
 	public Proizvod dopuni(@PathVariable Long id, @RequestParam int kolicina) {
 		return proizvodService.dopuniLager(id, kolicina);
 	}
 	
+	//pretraga
+	@GetMapping("/pretraga-naziv")
+	public List<Proizvod> pretraziProizvode(@RequestParam String naziv) {
+	    return proizvodService.pretraga(naziv);
+	}
+	
+	// filtriranje po ceni
+	@GetMapping("/filtriraj-cena")
+	public List<Proizvod> filtriraj(@RequestParam BigDecimal min, @RequestParam BigDecimal max) {
+		return proizvodService.filtrirajPoCeni(min, max);
+	}
 }
