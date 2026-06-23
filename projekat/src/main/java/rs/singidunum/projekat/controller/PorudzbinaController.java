@@ -39,12 +39,17 @@ public class PorudzbinaController {
 		return porudzbinaService.save(porudzbina);
 	}
 	
-	@PutMapping("{id}")
+	@PutMapping("/{id}")
 	public Porudzbina update(@PathVariable Long id, @RequestBody Porudzbina porudzbina) {
 		return porudzbinaService.update(id, porudzbina);
 	}
 	
-	@DeleteMapping
+	@PutMapping("/{id}/otkazi")
+	public Porudzbina otkazi(@PathVariable Long id) {
+		return porudzbinaService.otkaziPorudzbinu(id);
+	}
+	
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		porudzbinaService.delete(id);
 	}

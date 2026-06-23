@@ -16,6 +16,18 @@ public class StavkaPorudzbineService {
 		this.stavkaPorudzbineRepository = stavkaPorudzbineRepository;
 	}
 	
+	public void validiraj(StavkaPorudzbine stavka) {
+		if(stavka.getProizvod() == null) {
+			throw new RuntimeException("Proizvod je obavezan!");
+		}
+		if(stavka.getKolicina() <= 0) {
+			throw new RuntimeException("Kolicina mora biti veca od 0!");
+		}
+		if(stavka.getCena() == null) {
+			throw new RuntimeException("Cena je obavezna!");
+		}
+	}
+	
 	public List <StavkaPorudzbine> findAll() {
 		return stavkaPorudzbineRepository.findAll();
 	}
@@ -24,17 +36,16 @@ public class StavkaPorudzbineService {
 		return stavkaPorudzbineRepository.findById(id).orElseThrow(()-> new RuntimeException("Stavka porudzbine ne postoji"));
 	}
 	
-	public StavkaPorudzbine save(StavkaPorudzbine stavkaPorudzbine) {
-		return stavkaPorudzbineRepository.save(stavkaPorudzbine);
+	public StavkaPorudzbine save(StavkaPorudzbine stavka) {
+		validiraj(stavka);
+		return stavkaPorudzbineRepository.save(stavka);
 	}
 	
-	public StavkaPorudzbine update(Long id, StavkaPorudzbine izmeniStavkaPorudzbine) {
-	    StavkaPorudzbine postojecaStavkaPorudzbine = findById(id);
-
-	    postojecaStavkaPorudzbine.setKolicina(izmeniStavkaPorudzbine.getKolicina());
-	    postojecaStavkaPorudzbine.setCena(izmeniStavkaPorudzbine.getCena());
-
-	    return stavkaPorudzbineRepository.save(postojecaStavkaPorudzbine);
+	public StavkaPorudzbine update(Long id, StavkaPorudzbine izmeni) {
+	    StavkaPorudzbine postojeca = findById(id);
+	    validiraj(izmeni);
+	    postojeca.setKolicina(izmeni.getKolicina());
+	    return stavkaPorudzbineRepository.save(postojeca);
 	}
 	
 	public void delete(Long id) {
