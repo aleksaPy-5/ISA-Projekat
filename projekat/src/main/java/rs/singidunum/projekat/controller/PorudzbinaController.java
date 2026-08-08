@@ -129,6 +129,8 @@ public class PorudzbinaController {
 	public void delete(
 			@PathVariable Long id) {
 
+		porudzbinaService.delete(id);
+	}
 
 		porudzbinaService.delete(id);
 	}

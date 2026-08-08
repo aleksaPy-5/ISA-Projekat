@@ -12,6 +12,7 @@ import rs.singidunum.projekat.repository.VrstaKorisnikaRepository;
 public class VrstaKorisnikaService {
 
 
+
     private final VrstaKorisnikaRepository repository;
 
 
@@ -21,12 +22,16 @@ public class VrstaKorisnikaService {
         this.repository = repository;
     }
 
+    private void validiraj(VrstaKorisnika vrstaKorisnika) {
+        if(vrstaKorisnika.getNaziv() == null || vrstaKorisnika.getNaziv().trim().isEmpty()) {
+            throw new RuntimeException("Naziv vrste korisnika je obavezan");
+        }
+    }
 
 
     public List<VrstaKorisnika> findAll() {
         return repository.findAll();
     }
-
 
 
     public VrstaKorisnika findById(Long id) {
@@ -37,19 +42,12 @@ public class VrstaKorisnikaService {
     }
 
 
-
     public VrstaKorisnika save(VrstaKorisnika vrsta) {
 
-        if(vrsta.getNaziv() == null ||
-           vrsta.getNaziv().isBlank()) {
-
-            throw new RuntimeException(
-                    "Naziv vrste korisnika je obavezan");
-        }
+        validiraj(vrsta);
 
         return repository.save(vrsta);
     }
-
 
 
     public VrstaKorisnika update(
@@ -59,11 +57,12 @@ public class VrstaKorisnikaService {
 
         VrstaKorisnika postojeca = findById(id);
 
+        validiraj(novaVrsta);
+
         postojeca.setNaziv(novaVrsta.getNaziv());
 
         return repository.save(postojeca);
     }
-
 
 
     public void delete(Long id) {
@@ -73,4 +72,3 @@ public class VrstaKorisnikaService {
         repository.delete(vrsta);
     }
 
-}

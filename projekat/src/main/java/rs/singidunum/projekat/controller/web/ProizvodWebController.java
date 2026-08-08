@@ -24,6 +24,7 @@ private final PorudzbinaService porudzbinaService;
 
 
 
+
 public ProizvodWebController(
         ProizvodService proizvodService,
         KategorijaService kategorijaService,
@@ -223,6 +224,5 @@ private void pripremiModel(
             korisnikService.findAll()
     );
 }
-
 
 }
