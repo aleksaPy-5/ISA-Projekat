@@ -1,6 +1,7 @@
 package rs.singidunum.projekat.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -30,7 +31,7 @@ public class Porudzbina {
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "porudzbina", cascade = CascadeType.ALL)
-	private List<StavkaPorudzbine> stavke;
+	private List<StavkaPorudzbine> stavke = new ArrayList<>();
 
 	public Porudzbina() {
 		super();

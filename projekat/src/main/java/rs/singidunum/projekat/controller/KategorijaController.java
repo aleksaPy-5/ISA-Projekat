@@ -15,50 +15,78 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.singidunum.projekat.model.Kategorija;
 import rs.singidunum.projekat.service.KategorijaService;
 
+
 @RestController
 @RequestMapping("/kategorije")
 public class KategorijaController {
-	
-	private final KategorijaService kategorijaService;
-	
-	public KategorijaController(KategorijaService kategorijaService) {
+
+
+    private final KategorijaService kategorijaService;
+
+
+    public KategorijaController(KategorijaService kategorijaService) {
         this.kategorijaService = kategorijaService;
     }
 
+
+    // prikaz svih kategorija
     @GetMapping
-    public List<Kategorija> findAll() {
+    public List<Kategorija> getAllKategorije() {
         return kategorijaService.findAll();
     }
 
+
+    // prikaz kategorije po id
     @GetMapping("/{id}")
-    public Kategorija findById(@PathVariable Long id) {
+    public Kategorija getKategorijaById(
+            @PathVariable Long id) {
+
         return kategorijaService.findById(id);
     }
 
+
+    // kreiranje kategorije
     @PostMapping
-    public Kategorija save(@RequestBody Kategorija kategorija) {
+    public Kategorija createKategorija(
+            @RequestBody Kategorija kategorija) {
+
         return kategorijaService.save(kategorija);
     }
 
+
+    // izmena kategorije
     @PutMapping("/{id}")
-    public Kategorija update(@PathVariable Long id,
-                             @RequestBody Kategorija kategorija) {
+    public Kategorija updateKategorija(
+            @PathVariable Long id,
+            @RequestBody Kategorija kategorija) {
+
         return kategorijaService.update(id, kategorija);
     }
 
+
+    // brisanje kategorije
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteKategorija(
+            @PathVariable Long id) {
+
         kategorijaService.delete(id);
     }
-    
-    @GetMapping("/pretraga-kategorija")
-    public List<Kategorija> pretragaKategorija(@RequestParam String naziv) {
-    	return kategorijaService.pretraga(naziv);
+
+
+    // pretraga kategorija po nazivu
+    @GetMapping("/pretraga")
+    public List<Kategorija> pretragaKategorija(
+            @RequestParam String naziv) {
+
+        return kategorijaService.pretraga(naziv);
     }
-    
-    @GetMapping("/sortirano-naziv")
-    public List<Kategorija>sortirajPoNazivu() {
-    	return kategorijaService.sortirajPoNazivu();
+
+
+    // sortiranje po nazivu
+    @GetMapping("/sortirano")
+    public List<Kategorija> sortirajPoNazivu() {
+
+        return kategorijaService.sortirajPoNazivu();
     }
-    
+
 }

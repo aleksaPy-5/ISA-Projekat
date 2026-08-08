@@ -14,38 +14,69 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.singidunum.projekat.model.VrstaKorisnika;
 import rs.singidunum.projekat.service.VrstaKorisnikaService;
 
+
 @RestController
-@RequestMapping("/vrsteKorisnika")
+@RequestMapping("/vrste-korisnika")
 public class VrstaKorisnikaController {
-	
-	public final VrstaKorisnikaService vrstaKorisnikaService;
-	
-	public VrstaKorisnikaController(VrstaKorisnikaService vrstaKorisnikaService) {
-		this.vrstaKorisnikaService = vrstaKorisnikaService;
-	}
-	
-	@GetMapping
-	public List<VrstaKorisnika> findAll() {
-		return vrstaKorisnikaService.findAll();
-	}
-	
-	@GetMapping("/{id}")
-	public VrstaKorisnika findById(@PathVariable Long id) {
-		return vrstaKorisnikaService.findById(id);
-	}
-	
-	@PostMapping
-	public VrstaKorisnika save(@RequestBody VrstaKorisnika vrstaKorisnika) {
-		return vrstaKorisnikaService.save(vrstaKorisnika);
-	}
-	
-	@PutMapping("/{id}")
-	public VrstaKorisnika update(@PathVariable Long id, @RequestBody VrstaKorisnika vrstaKorisnika) {
-		return vrstaKorisnikaService.update(id, vrstaKorisnika);
-	}
-	
-	@DeleteMapping
-	public void delete(@PathVariable Long id) {
-		vrstaKorisnikaService.delete(id);
-	}
+
+
+    private final VrstaKorisnikaService vrstaKorisnikaService;
+
+
+    public VrstaKorisnikaController(
+            VrstaKorisnikaService vrstaKorisnikaService) {
+
+        this.vrstaKorisnikaService = vrstaKorisnikaService;
+    }
+
+
+
+    // sve vrste korisnika
+    @GetMapping
+    public List<VrstaKorisnika> getAllVrste() {
+
+        return vrstaKorisnikaService.findAll();
+    }
+
+
+
+    // vrsta po id
+    @GetMapping("/{id}")
+    public VrstaKorisnika getById(
+            @PathVariable Long id) {
+
+        return vrstaKorisnikaService.findById(id);
+    }
+
+
+
+    // dodavanje vrste
+    @PostMapping
+    public VrstaKorisnika create(
+            @RequestBody VrstaKorisnika vrsta) {
+
+        return vrstaKorisnikaService.save(vrsta);
+    }
+
+
+
+    // izmena
+    @PutMapping("/{id}")
+    public VrstaKorisnika update(
+            @PathVariable Long id,
+            @RequestBody VrstaKorisnika vrsta) {
+
+        return vrstaKorisnikaService.update(id, vrsta);
+    }
+
+
+
+    // brisanje
+    @DeleteMapping("/{id}")
+    public void delete(
+            @PathVariable Long id) {
+
+        vrstaKorisnikaService.delete(id);
+    }
+
 }

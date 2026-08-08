@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Porudžbine</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+
+
+<body>
+
+
+<a th:href="@{/web}">
+    Početna
+</a>
+
+
+
+<h1>Lista porudžbina</h1>
+
+
+
+
+<table border="1">
+
+
+<tr>
+
+    <th>ID</th>
+    <th>Korisnik</th>
+    <th>Ukupna cena</th>
+    <th>Status</th>
+    <th>Promena statusa</th>
+
+</tr>
+
+
+
+
+
+<tr th:each="p : ${porudzbine}">
+
+
+
+<td th:text="${p.id}">
+</td>
+
+
+
+
+<td th:text="${p.korisnik != null ? p.korisnik.email : ''}">
+</td>
+
+
+
+
+<td th:text="${p.ukupnaCena}">
+</td>
+
+
+
+
+<td th:text="${p.status}">
+</td>
+
+
+
+
+
+<td>
+
+
+
+<form th:action="@{/web/porudzbine/{id}/status(id=${p.id})}"
+      method="post">
+
+
+
+<select name="status">
+
+
+
+<option value="Na cekanju"
+        th:selected="${p.status == 'Na cekanju'}">
+    Na cekanju
+</option>
+
+
+
+<option value="Poslata"
+        th:selected="${p.status == 'Poslata'}">
+    Poslata
+</option>
+
+
+
+<option value="Zavrsena"
+        th:selected="${p.status == 'Zavrsena'}">
+    Zavrsena
+</option>
+
+
+
+<option value="Otkazana"
+        th:selected="${p.status == 'Otkazana'}">
+    Otkazana
+</option>
+
+
+
+</select>
+
+
+
+
+<button type="submit">
+    Promeni status
+</button>
+
+
+
+</form>
+
+
+
+</td>
+
+
+</tr>
+
+
+
+</table>
+
+
+
+</body>
+
+</html>

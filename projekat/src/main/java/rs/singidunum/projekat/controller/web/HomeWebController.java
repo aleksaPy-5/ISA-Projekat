@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeWebController {
-	
-	@GetMapping({"/","/web"})
-	public String index() {
-		return "index";
-	}
+
+    @GetMapping({"/", "/web"})
+    public String index() {
+        return "index";
+    }
 }

@@ -1,0 +1,28 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 30px;
+}
+
+nav a {
+	margin-right: 15px;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top: 15px;
+}
+
+th, td {
+	border: 1px solid #ccc;
+	padding: 8px;
+}
+
+input, select, textarea {
+	padding: 6px;
+	margin: 4px;
+}
+
+button {
+	padding: 6px 12px;
+}

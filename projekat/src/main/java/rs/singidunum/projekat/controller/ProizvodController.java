@@ -16,63 +16,119 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.singidunum.projekat.model.Proizvod;
 import rs.singidunum.projekat.service.ProizvodService;
 
+
 @RestController
 @RequestMapping("/proizvodi")
 public class ProizvodController {
 
-	
+
 	private final ProizvodService proizvodService;
-	
+
+
 	public ProizvodController(ProizvodService proizvodService) {
 		this.proizvodService = proizvodService;
 	}
-	
+
+
+
+	// prikaz svih proizvoda
 	@GetMapping
-	public List<Proizvod> findAll() {
+	public List<Proizvod> getAllProizvodi() {
+
 		return proizvodService.findAll();
 	}
-	
+
+
+
+	// prikaz proizvoda po id
 	@GetMapping("/{id}")
-	public Proizvod findById (@PathVariable Long id) {
+	public Proizvod getProizvodById(
+			@PathVariable Long id) {
+
+
 		return proizvodService.findById(id);
 	}
-	
+
+
+
+	// kreiranje proizvoda
 	@PostMapping
-	public Proizvod save(@RequestBody Proizvod proizvod) {
+	public Proizvod createProizvod(
+			@RequestBody Proizvod proizvod) {
+
+
 		return proizvodService.save(proizvod);
 	}
-	
+
+
+
+	// izmena proizvoda
 	@PutMapping("/{id}")
-	public Proizvod update(@PathVariable Long id, @RequestBody Proizvod proizvod) {
+	public Proizvod updateProizvod(
+			@PathVariable Long id,
+			@RequestBody Proizvod proizvod) {
+
+
 		return proizvodService.update(id, proizvod);
 	}
-	
+
+
+
+	// brisanje proizvoda
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
+	public void deleteProizvod(
+			@PathVariable Long id) {
+
+
 		proizvodService.delete(id);
 	}
-	
-	// kupovina
-	@PostMapping("/kupi/{id}")
-	public Proizvod kupi(@PathVariable Long id, @RequestParam int kolicina) {
-		return proizvodService.kupiProizvod(id, kolicina);
+
+
+
+	// pretraga po nazivu
+	@GetMapping("/pretraga")
+	public List<Proizvod> pretraga(
+			@RequestParam String naziv) {
+
+
+		return proizvodService.pretraga(naziv);
 	}
-	
-	//dopuna
-	@PutMapping("/dopuni/{id}")
-	public Proizvod dopuni(@PathVariable Long id, @RequestParam int kolicina) {
-		return proizvodService.dopuniLager(id, kolicina);
-	}
-	
-	//pretraga
-	@GetMapping("/pretraga-naziv")
-	public List<Proizvod> pretraziProizvode(@RequestParam String naziv) {
-	    return proizvodService.pretraga(naziv);
-	}
-	
+
+
+
 	// filtriranje po ceni
-	@GetMapping("/filtriraj-cena")
-	public List<Proizvod> filtriraj(@RequestParam BigDecimal min, @RequestParam BigDecimal max) {
+	@GetMapping("/cena")
+	public List<Proizvod> filtrirajPoCeni(
+			@RequestParam BigDecimal min,
+			@RequestParam BigDecimal max) {
+
+
 		return proizvodService.filtrirajPoCeni(min, max);
 	}
+
+
+
+	// dopuna lagera
+	@PutMapping("/{id}/lager")
+	public Proizvod dopuniLager(
+			@PathVariable Long id,
+			@RequestParam int kolicina) {
+
+
+		return proizvodService.dopuniLager(id, kolicina);
+	}
+
+
+
+	// kupovina proizvoda
+	@PutMapping("/{id}/kupi")
+	public Proizvod kupiProizvod(
+			@PathVariable Long id,
+			@RequestParam int kolicina) {
+
+
+		return proizvodService.kupiProizvod(id, kolicina);
+	}
+
+
 }

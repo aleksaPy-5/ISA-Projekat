@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+
+<title>Kategorije</title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+
+</head>
+
+<body>
+
+<a th:href="@{/web}">
+    Početna
+</a>
+
+<h1>Kategorije</h1>
+
+<!-- PRETRAGA -->
+
+<form th:action="@{/web/kategorije/pretraga}" method="get">
+
+
+<input type="text"
+       name="naziv"
+       placeholder="Pretraga kategorije">
+
+
+<button type="submit">
+    Pretraži
+</button>
+
+
+<a th:href="@{/web/kategorije}">
+    Reset
+</a>
+
+
+</form>
+
+<!-- DODAVANJE KATEGORIJE -->
+
+<form th:action="${kategorija.id == null} ?
+                  @{/web/kategorije} :
+                  @{/web/kategorije/update/{id}(id=${kategorija.id})}"
+
+
+  th:object="${kategorija}"
+
+  method="post">
+
+
+<input type="text"
+       th:field="*{naziv}"
+       placeholder="Naziv kategorije"
+       required>
+
+
+<button type="submit">
+    Sačuvaj
+</button>
+
+
+</form>
+
+<!-- LISTA KATEGORIJA -->
+
+<table border="1">
+
+<tr>
+
+
+<th>ID</th>
+
+<th>Naziv</th>
+
+<th>Akcije</th>
+
+
+</tr>
+
+<tr th:each="k : ${kategorije}">
+
+
+<td th:text="${k.id}">
+</td>
+
+
+<td th:text="${k.naziv}">
+</td>
+
+
+
+<td>
+
+
+    <!-- BRISANJE -->
+
+    <form th:action="@{/web/kategorije/{id}/obrisi(id=${k.id})}"
+          method="post"
+          style="display:inline">
+
+
+        <button type="submit">
+            Obriši
+        </button>
+
+
+    </form>
+
+
+</td>
+
+
+</tr>
+
+</table>
+
+</body>
+
+</html>

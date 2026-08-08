@@ -14,38 +14,84 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.singidunum.projekat.model.StavkaPorudzbine;
 import rs.singidunum.projekat.service.StavkaPorudzbineService;
 
+
 @RestController
-@RequestMapping("/stavkePorudzbine")
+@RequestMapping("/stavke-porudzbine")
 public class StavkaPorudzbineController {
-	
-	public final StavkaPorudzbineService stavkaPorudzbineService;
-	
-	public StavkaPorudzbineController(StavkaPorudzbineService stavkaPorudzbineService) {
+
+
+	private final StavkaPorudzbineService stavkaPorudzbineService;
+
+
+	public StavkaPorudzbineController(
+			StavkaPorudzbineService stavkaPorudzbineService) {
+
 		this.stavkaPorudzbineService = stavkaPorudzbineService;
 	}
-	
+
+
+
+	// sve stavke
 	@GetMapping
-	public List<StavkaPorudzbine> findAll() {
+	public List<StavkaPorudzbine> getAllStavke() {
+
 		return stavkaPorudzbineService.findAll();
 	}
-	
+
+
+
+	// stavka po id
 	@GetMapping("/{id}")
-	public StavkaPorudzbine findById(@PathVariable Long id) {
+	public StavkaPorudzbine getStavkaById(
+			@PathVariable Long id) {
+
+
 		return stavkaPorudzbineService.findById(id);
 	}
-	
+
+
+
+	// stavke jedne porudzbine
+	@GetMapping("/porudzbina/{porudzbinaId}")
+	public List<StavkaPorudzbine> getByPorudzbina(
+			@PathVariable Long porudzbinaId) {
+
+
+		return stavkaPorudzbineService.findByPorudzbinaId(porudzbinaId);
+	}
+
+
+
+	// dodavanje stavke
 	@PostMapping
-	public StavkaPorudzbine save(@RequestBody StavkaPorudzbine stavkaPorudzbine) {
-		return stavkaPorudzbineService.save(stavkaPorudzbine);
+	public StavkaPorudzbine createStavka(
+			@RequestBody StavkaPorudzbine stavka) {
+
+
+		return stavkaPorudzbineService.save(stavka);
 	}
-	
+
+
+
+	// izmena stavke
 	@PutMapping("/{id}")
-	public StavkaPorudzbine update(@PathVariable Long id, @RequestBody StavkaPorudzbine stavkaPorudzbine) {
-		return stavkaPorudzbineService.update(id, stavkaPorudzbine);
+	public StavkaPorudzbine updateStavka(
+			@PathVariable Long id,
+			@RequestBody StavkaPorudzbine stavka) {
+
+
+		return stavkaPorudzbineService.update(id, stavka);
 	}
-	
+
+
+
+	// brisanje stavke
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
+	public void deleteStavka(
+			@PathVariable Long id) {
+
+
 		stavkaPorudzbineService.delete(id);
 	}
+
 }

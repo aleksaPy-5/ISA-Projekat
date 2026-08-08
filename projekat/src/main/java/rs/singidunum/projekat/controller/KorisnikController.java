@@ -15,48 +15,83 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.singidunum.projekat.model.Korisnik;
 import rs.singidunum.projekat.service.KorisnikService;
 
+
 @RestController
 @RequestMapping("/korisnici")
 public class KorisnikController {
-	
+
+
 	private final KorisnikService korisnikService;
-	
+
+
 	public KorisnikController(KorisnikService korisnikService) {
 		this.korisnikService = korisnikService;
 	}
-	
+
+
+
+	// prikaz svih korisnika
 	@GetMapping
-	public List<Korisnik> findAll() {
-		return korisnikService.findAll();	
+	public List<Korisnik> getAllKorisnici() {
+
+		return korisnikService.findAll();
 	}
-	
+
+
+
+	// prikaz korisnika po id
 	@GetMapping("/{id}")
-	public Korisnik findById(@PathVariable Long id) {
+	public Korisnik getKorisnikById(
+			@PathVariable Long id) {
+
+
 		return korisnikService.findById(id);
 	}
-	
+
+
+
+	// kreiranje korisnika
 	@PostMapping
-	public Korisnik save(@RequestBody Korisnik korisnik) {
+	public Korisnik createKorisnik(
+			@RequestBody Korisnik korisnik) {
+
+
 		return korisnikService.save(korisnik);
 	}
-	
+
+
+
+	// izmena korisnika
 	@PutMapping("/{id}")
-	public Korisnik update(@PathVariable Long id, @RequestBody Korisnik korisnik) {
+	public Korisnik updateKorisnik(
+			@PathVariable Long id,
+			@RequestBody Korisnik korisnik) {
+
+
 		return korisnikService.update(id, korisnik);
 	}
-	
+
+
+
+	// brisanje korisnika
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
+	public void deleteKorisnik(
+			@PathVariable Long id) {
+
+
 		korisnikService.delete(id);
 	}
-	
-	@GetMapping("/pretraga-ime")
-	public List<Korisnik> pretragaIme (@RequestParam String ime) {
+
+
+
+	// pretraga korisnika po imenu
+	@GetMapping("/pretraga")
+	public List<Korisnik> pretraga(
+			@RequestParam String ime) {
+
+
 		return korisnikService.pretraga(ime);
 	}
-	
-	@PostMapping("/login")
-	public Korisnik login(@RequestParam String email, @RequestParam String lozinka) {
-		return korisnikService.login(email, lozinka);
-	}
+
+
 }
